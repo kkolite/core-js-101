@@ -66,7 +66,7 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-  return value.split(', ')[1];
+  return value.split(', ')[1].slice(0, -1);
 }
 
 
@@ -95,8 +95,8 @@ function getFirstChar(value) {
  *   'cat'              => 'cat'
  *   '\tHello, World! ' => 'Hello, World!'
  */
-function removeLeadingAndTrailingWhitespaces(/* value */) {
-  throw new Error('Not implemented');
+function removeLeadingAndTrailingWhitespaces(value) {
+  return value.trim();
 }
 
 /**
@@ -146,7 +146,7 @@ function unbracketTag(str) {
   if (str[0] === '<') {
     result = str.slice(1);
   }
-  if (str[-1] === '>') {
+  if (str[str.length - 1] === '>') {
     result = result.slice(0, -1);
   }
   return result;
@@ -209,8 +209,39 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  let str = '';
+  for (let i = 0; i < height; i += 1) {
+    let strTemp = '';
+    for (let k = 0; k < width; k += 1) {
+      if (i === 0 && k === 0) {
+        strTemp += '┌';
+      }
+      if (i === 0 && k === width - 1) {
+        strTemp += '┐\n';
+      }
+      if (i === height - 1 && k === 0) {
+        strTemp += '└';
+      }
+      if (i === height - 1 && k === width - 1) {
+        strTemp += '┘\n';
+      }
+      if (i !== 0 && i !== height - 1 && k === 0) {
+        strTemp += '│';
+      }
+      if (i !== 0 && i !== height - 1 && k === width - 1) {
+        strTemp += '│\n';
+      }
+      if ((i === 0 || i === height - 1) && k !== 0 && k !== width - 1) {
+        strTemp += '─';
+      }
+      if ((i !== 0 && i !== height - 1) && (k !== 0 && k !== width - 1)) {
+        strTemp += ' ';
+      }
+    }
+    str += strTemp;
+  }
+  return str;
 }
 
 
@@ -230,8 +261,19 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const arr1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ';
+  const arr2 = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm ';
+  let result = '';
+  for (let i = 0; i < str.length; i += 1) {
+    const index = arr1.indexOf(str[i]);
+    if (index === -1) {
+      result += str[i];
+    } else {
+      result += arr2[index];
+    }
+  }
+  return result;
 }
 
 /**
@@ -248,7 +290,12 @@ function encodeToRot13(/* str */) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-  return typeof value === 'string';
+  try {
+    value.toLowerCase();
+    return true;
+  } catch (e) {
+    return false;
+  }
 }
 
 
