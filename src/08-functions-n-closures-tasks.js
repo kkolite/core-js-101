@@ -165,7 +165,6 @@ function logger(func, logFunc) {
   return (...args) => {
     const argsStr = JSON.stringify(args).slice(1, -1);
     logFunc(`${func.name}(${argsStr}) starts`);
-    console.log(...args);
     const result = func(...args);
     logFunc(`${func.name}(${argsStr}) ends`);
     return result;
