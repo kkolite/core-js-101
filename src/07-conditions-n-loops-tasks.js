@@ -500,7 +500,6 @@ function getMatrixProduct(m1, m2) {
       arr = [];
     }
   }
-  console.log(result);
   return result;
 }
 
