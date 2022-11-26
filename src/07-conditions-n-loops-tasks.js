@@ -484,7 +484,6 @@ function getCommonDirectoryPath(pathes) {
  */
 function getMatrixProduct(m1, m2) {
   const result = [];
-  console.log(m1[0].length);
   if (m1[0].length === m2.length) {
     let acc = 0;
     for (let i = 0; i < m2[0].length; i += 1) {
