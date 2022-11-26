@@ -308,8 +308,28 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  let acc = 0;
+  let i = 1;
+  let k = 0;
+  const str = ccn.toString();
+  if (str.length % 2 === 0) {
+    i = 0;
+    k = 1;
+  }
+  while (i < str.length) {
+    let n = str[i] * 2;
+    if (n > 9) {
+      n -= 9;
+    }
+    acc += n;
+    i += 2;
+  }
+  while (k < str.length) {
+    acc += str[k] * 1;
+    k += 2;
+  }
+  return acc % 10 === 0;
 }
 
 /**
@@ -415,8 +435,32 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const arr = [];
+  const result = [];
+  pathes.forEach((el) => {
+    arr.push(el.split('/'));
+  });
+  for (let i = 0; i < arr[0].length; i += 1) {
+    let bool = true;
+    result.push(arr[0][i]);
+    for (let k = 0; k < arr.length; k += 1) {
+      if (arr[k][i] === arr[0][i]) {
+        bool = true;
+      } else {
+        bool = false;
+      }
+    }
+    if (!bool) {
+      result.pop();
+      break;
+    }
+  }
+  let str = result.join('/');
+  if (result.length > 0) {
+    str = `${result.join('/')}/`;
+  }
+  return str;
 }
 
 
@@ -438,8 +482,26 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const result = [];
+  console.log(m1[0].length);
+  if (m1[0].length === m2.length) {
+    let acc = 0;
+    for (let i = 0; i < m2[0].length; i += 1) {
+      let arr = [];
+      for (let k = 0; k < m2[0].length; k += 1) {
+        for (let n = 0; n < m1[0].length; n += 1) {
+          acc += m1[i][n] * m2[n][k];
+        }
+        arr.push(acc);
+        acc = 0;
+      }
+      result.push(arr);
+      arr = [];
+    }
+  }
+  console.log(result);
+  return result;
 }
 
 
